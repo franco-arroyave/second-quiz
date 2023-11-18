@@ -1,0 +1,66 @@
+version: '3.8'
+services:
+  database:
+    container_name: database
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: diord
+      MYSQL_DATABASE: fellowship
+    ports:
+      - '3308:3306'
+    volumes:
+      - ./database/data:/var/lib/mysql
+    networks:
+      - ver
+
+  frontend:
+    build: ./frontend
+    restart: always
+    expose:
+      - "3000"
+    ports:
+      - "9000:3000"
+    volumes:
+      - ./frontend/app:/usr/src/app/
+    depends_on:
+      - backend
+  networks:
+      - ver
+
+  backend:
+    build: ./backend
+    restart: always
+    environment:
+      DB_PASSWORD: diord
+      DB_HOST: database
+      DB_NAME: fellowship
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+    volumes:
+      - ./backend/src:/app
+    networks:
+      - ver
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: database
+    depends_on:
+      - database
+    networks:
+      - ver
+
+networks:
+  ver:
+  
+volumes:
+    app:
+    database:

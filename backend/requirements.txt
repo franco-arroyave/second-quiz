@@ -1,0 +1,7 @@
+flask
+cryptography
+pymysql
+Flask-SQLAlchemy
+flask-marshmallow
+marshmallow-sqlalchemy
+google-cloud-bigquery
