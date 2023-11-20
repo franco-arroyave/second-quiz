@@ -1,7 +1,11 @@
 flask
 cryptography
 pymysql
+pyjwt
+pytz
 Flask-SQLAlchemy
 flask-marshmallow
 marshmallow-sqlalchemy
+Flask-Login
+flask_cors
 google-cloud-bigquery

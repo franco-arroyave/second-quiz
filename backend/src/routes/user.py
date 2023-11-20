@@ -2,6 +2,7 @@ from flask import request, jsonify, Blueprint
 from models.models import db, User
 from models.schema import UserSchema
 from sqlalchemy.exc import IntegrityError
+from utils.security import Security
 
 user_bp = Blueprint('user', __name__)
 
@@ -41,10 +42,14 @@ def get_users():
     return jsonify({'queries': result})
 
 @user_bp.route('/<string:username>', methods=['GET'])
-def get_user_by_username(username):
+def login(username):
     user = User.query.filter_by(username=username).first()
-
     if user:
-        return jsonify({'user': user_schema.dump(user)})
+        token = Security.generate_token(user)
+        return jsonify({'message': 'User logged in', 'token': token})
     else:
         return jsonify({'message': 'User not found'}), 404
+    
+@user_bp.route('/logout', methods=['POST'])
+def logout():
+    return jsonify({'message': 'User logged out'})

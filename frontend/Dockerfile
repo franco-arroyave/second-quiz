@@ -3,9 +3,9 @@ FROM node:21-alpine
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY app/package.json ./
 
-# RUN npm install
+RUN npm install
 
 COPY app /usr/src/app/
 

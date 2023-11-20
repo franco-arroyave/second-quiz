@@ -9,6 +9,7 @@ class Config:
                                cnx['host']+':3306/'+
                                cnx['db'])
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = 'fellowship'
 
 class DevelopmentConfig(Config):
     DEBUG = True
